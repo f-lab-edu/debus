@@ -22,9 +22,8 @@
         "noFallthroughCasesInSwitch": true,
         "baseUrl": ".", // baseUrl을 기준으로 관련된 위치에 모듈 이름의 경로 매핑 목록을 나열한다.
         "paths": {
-            "@/*": ["src/*"],
-            "@components/*": ["src/components/*"],
-            "@pages/*": ["src/pages/*"]
+            "@components/*": ["./src/components/*"],
+            "@pages/*": ["./src/pages/*"]
         }
     },
     "include": ["src"],
