@@ -27,4 +27,9 @@ module.exports = {
         'react/react-in-jsx-scope': 'off',
         '@typescript-eslint/no-unused-vars': ['warn'],
     },
+    settings: {
+        react: {
+            version: 'detect', // 사용자가 설치한 버전을 자동으로 선택
+        },
+    },
 };
