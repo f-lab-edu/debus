@@ -20,7 +20,7 @@ html.dark {
 }
 
 * {
-    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+    font-family: 'Spoqa Han Sans Neo', sans-serif;
     box-sizing: border-box;
 }
 
