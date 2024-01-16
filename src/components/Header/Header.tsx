@@ -12,7 +12,7 @@ const Header = () => {
                 <h1 className={cx('header-logo')}>DeBus</h1>
                 <div className={cx('header-right')}>
                     <button className={cx('btn-mode')} onClick={toggleDarkMode}>
-                        {darkMode ? <IoIosSunny /> : <IoMdMoon />}
+                        {darkMode ? <IoMdMoon /> : <IoIosSunny />}
                     </button>
                     <button className={cx('btn-login')}>로그인</button>
                 </div>
