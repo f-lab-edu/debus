@@ -1,0 +1,41 @@
+#header {
+    background: var(--color-bg-dark);
+    padding: 0 20px;
+}
+
+.header {
+    max-width: 1060px;
+    margin: 0 auto;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header h1 {
+    font-size: 24px;
+    color: #ff6636;
+}
+
+.header .header-right {
+    display: flex;
+    gap: 8px;
+}
+
+.header .btn-mode {
+    font-size: 1.5rem;
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    padding: 4px;
+}
+
+.header .btn-mode:hover {
+    background: var(--color-btn-hover);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.header .btn-login {
+    color: var(--color-text);
+}

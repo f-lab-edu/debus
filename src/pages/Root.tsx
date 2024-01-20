@@ -1,11 +1,16 @@
+import Header from '@components/Header/Header';
+import RootContainer from '@components/UI/RootContainer/RootContainer';
 import { Outlet } from 'react-router-dom';
+import { DarkModeProvider } from 'src/context/DarkModeContext';
 
 const Root = () => {
     return (
-        <>
-            <h1>공통 레이아웃</h1>
-            <Outlet />
-        </>
+        <DarkModeProvider>
+            <Header />
+            <RootContainer>
+                <Outlet />
+            </RootContainer>
+        </DarkModeProvider>
     );
 };
 
