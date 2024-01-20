@@ -1,11 +1,11 @@
+import { useTheme } from '@hooks/useTheme';
 import classnames from 'classnames/bind';
 import { IoIosSunny, IoMdMoon } from 'react-icons/io';
-import { useDarkMode } from 'src/context/DarkModeContext';
 import styles from './Header.module.css';
 const cx = classnames.bind(styles);
 
 const Header = () => {
-    const [darkMode, toggleDarkMode] = useDarkMode();
+    const [darkMode, toggleDarkMode] = useTheme();
     const handleToggle = () => toggleDarkMode();
     return (
         <header id={cx('header')}>
