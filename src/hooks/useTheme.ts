@@ -1,15 +1,18 @@
-import { useCallback, useEffect, useState } from 'react';
+import { atom, useAtom } from 'jotai';
+import { useCallback, useEffect } from 'react';
 
 export type DarkModeState = [boolean, (localTheme?: boolean) => void];
 
-export const useTheme = (initialState: boolean = false): DarkModeState => {
-    const [darkMode, setDarkMode] = useState(initialState);
+const darkModeAtom = atom(false);
+
+export const useTheme = (): DarkModeState => {
+    const [darkMode, setDarkMode] = useAtom(darkModeAtom);
     const toggleDarkMode = useCallback(
         (localTheme?: boolean) => {
             setDarkMode(localTheme ?? !darkMode);
             updateDarkMode(localTheme ?? !darkMode);
         },
-        [darkMode],
+        [darkMode, setDarkMode],
     );
     useEffect(() => {
         const isDark =
