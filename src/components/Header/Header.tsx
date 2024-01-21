@@ -1,12 +1,13 @@
-import { useTheme } from '@hooks/useTheme';
+import { darkMode_atom } from '@store/atoms/theme';
 import classnames from 'classnames/bind';
+import { useAtom } from 'jotai';
 import { IoIosSunny, IoMdMoon } from 'react-icons/io';
 import styles from './Header.module.css';
 const cx = classnames.bind(styles);
 
 const Header = () => {
-    const [darkMode, toggleDarkMode] = useTheme();
-    const handleToggle = () => toggleDarkMode();
+    const [darkMode, setDarkMode] = useAtom(darkMode_atom);
+    const handleToggle = () => setDarkMode(!darkMode);
     return (
         <header id={cx('header')}>
             <div className={cx('header')}>
