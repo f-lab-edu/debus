@@ -14,11 +14,8 @@ const ThemeButton = () => {
     };
 
     const toggleDarkClass = (darkMode: boolean) => {
-        if (darkMode) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
+        if (darkMode) document.body.dataset.theme = 'dark';
+        else document.body.dataset.theme = 'light';
     };
 
     useEffect(() => {

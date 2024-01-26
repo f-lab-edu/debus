@@ -1,7 +1,7 @@
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
 @import './reset.css';
 
-:root {
+[data-theme='light'] {
     --color-bg: #fdfffd;
     --color-bg-dark: white;
     --color-white: white;
@@ -11,7 +11,7 @@
     --color-btn-hover: #1d202610;
 }
 
-html.dark {
+[data-theme='dark'] {
     --color-bg: #1d2026;
     --color-bg-dark: #191b20;
     --color-text: white;
@@ -26,8 +26,5 @@ html.dark {
 
 body {
     background: var(--color-bg);
-}
-
-#root {
     color: var(--color-text);
 }
