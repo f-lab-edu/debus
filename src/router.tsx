@@ -2,15 +2,15 @@ import Home from '@pages/Home';
 import Line from '@pages/Line';
 import MyPage from '@pages/MyPage';
 import Operation from '@pages/Operation';
-import Root from '@pages/Root';
 import Station from '@pages/Station';
 
 import { createBrowserRouter } from 'react-router-dom';
+import App from 'src/App';
 
 export const router = createBrowserRouter([
     {
         path: '/',
-        element: <Root />,
+        element: <App />,
         children: [
             { index: true, element: <Home /> },
             {
