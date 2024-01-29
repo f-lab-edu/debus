@@ -6,11 +6,11 @@ import styles from './ThemeButton.module.css';
 const cx = classnames.bind(styles);
 
 const ThemeButton = () => {
-    const [darkMode, setDarkMode] = useAtom(darkModeAtom);
+    const [darkMode, toggleDarkMode] = useAtom(darkModeAtom);
 
     return (
         <>
-            <button className={cx('wrapper')} onClick={setDarkMode}>
+            <button className={cx('wrapper')} onClick={toggleDarkMode}>
                 {darkMode ? <IoMdMoon /> : <IoIosSunny />}
             </button>
         </>
