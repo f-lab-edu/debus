@@ -1,7 +1,7 @@
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
 @import './reset.css';
 
-[data-theme='light'] {
+:root {
     --color-bg: #fdfffd;
     --color-bg-dark: white;
     --color-white: white;
@@ -9,14 +9,6 @@
     --color-gray-900: #1d2026;
     --color-accent: #ff6636;
     --color-btn-hover: #1d202610;
-}
-
-[data-theme='dark'] {
-    --color-bg: #1d2026;
-    --color-bg-dark: #191b20;
-    --color-text: white;
-    --color-gray-900: white;
-    --color-btn-hover: #ffffff10;
 }
 
 * {
@@ -28,6 +20,14 @@
     background: var(--color-bg);
     color: var(--color-text);
     height: 100vh;
+}
+
+#app.dark {
+    --color-bg: #1d2026;
+    --color-bg-dark: #191b20;
+    --color-text: white;
+    --color-gray-900: white;
+    --color-btn-hover: #ffffff10;
 }
 
 #app .container {
