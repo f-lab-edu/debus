@@ -11,7 +11,18 @@
     --color-btn-hover: #1d202610;
 }
 
-html.dark {
+* {
+    font-family: 'Spoqa Han Sans Neo', sans-serif;
+    box-sizing: border-box;
+}
+
+#app {
+    background: var(--color-bg);
+    color: var(--color-text);
+    height: 100vh;
+}
+
+#app.dark {
     --color-bg: #1d2026;
     --color-bg-dark: #191b20;
     --color-text: white;
@@ -19,15 +30,8 @@ html.dark {
     --color-btn-hover: #ffffff10;
 }
 
-* {
-    font-family: 'Spoqa Han Sans Neo', sans-serif;
-    box-sizing: border-box;
-}
-
-body {
-    background: var(--color-bg);
-}
-
-#root {
-    color: var(--color-text);
+#app .container {
+    margin: 0 auto;
+    max-width: 1060px;
+    padding: 0 20px;
 }
