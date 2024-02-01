@@ -1,7 +1,9 @@
 import { initializeApp } from 'firebase/app';
 import {
-    getAuth,
     GoogleAuthProvider,
+    User,
+    getAuth,
+    onAuthStateChanged,
     signInWithPopup,
     signOut,
 } from 'firebase/auth';
@@ -19,11 +21,16 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 export const login = async () => {
-    return signInWithPopup(auth, provider)
-        .then((result) => result.user)
-        .catch(console.error);
+    return signInWithPopup(auth, provider).catch((error) => {
+        throw new Error(error);
+    });
 };
 
 export const logout = async () => {
-    return signOut(auth).then(() => null);
+    return signOut(auth).catch((error) => {
+        throw new Error(error);
+    });
 };
+
+export const onUserStateChange = (callback: (user: User | null) => void) =>
+    onAuthStateChanged(auth, (user) => callback(user));
