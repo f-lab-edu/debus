@@ -1,4 +1,10 @@
 import { User } from 'firebase/auth';
-import { atom } from 'jotai';
+import { atom, useAtomValue } from 'jotai';
+import { onUserStateChange } from 'src/api/firebase';
 
-export const authAtom = atom<User | null>(null);
+const authAtom = atom<User | null>(null);
+authAtom.onMount = (set) => {
+    onUserStateChange(set);
+};
+
+export const useAuth = () => useAtomValue(authAtom);

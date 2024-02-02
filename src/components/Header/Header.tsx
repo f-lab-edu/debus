@@ -1,18 +1,13 @@
 import Avatar from '@components/Avatar/Avatar';
 import ThemeButton from '@components/UI/ThemeButton/ThemeButton';
-import { authAtom } from '@store/atoms/auth';
+import { useAuth } from '@store/atoms/auth';
 import classnames from 'classnames/bind';
-import { useAtom } from 'jotai';
-import { useEffect } from 'react';
-import { login, logout, onUserStateChange } from 'src/api/firebase';
+import { login, logout } from 'src/api/firebase';
 import styles from './Header.module.css';
 const cx = classnames.bind(styles);
 
 const Header = () => {
-    const [user, setUser] = useAtom(authAtom);
-    useEffect(() => {
-        onUserStateChange(setUser);
-    }, [setUser]);
+    const user = useAuth();
     return (
         <header id={cx('header')}>
             <div className={cx('header')}>
