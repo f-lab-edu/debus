@@ -23,8 +23,8 @@ const db = getDatabase(app);
 
 const provider = new GoogleAuthProvider();
 
-export const login = async () => {
-    return signInWithPopup(auth, provider)
+export const login = () =>
+    signInWithPopup(auth, provider)
         .then(async (res) => {
             const user = res.user;
             const isRegistered = await checkUserExists(user.uid);
@@ -36,13 +36,11 @@ export const login = async () => {
         .catch((error) => {
             throw new Error(error);
         });
-};
 
-export const logout = async () => {
-    return signOut(auth).catch((error) => {
+export const logout = () =>
+    signOut(auth).catch((error) => {
         throw new Error(error);
     });
-};
 
 export const onUserStateChange = (callback: (user: UserTypes | null) => void) =>
     onAuthStateChanged(auth, async (user) => {
@@ -58,11 +56,8 @@ export const onUserStateChange = (callback: (user: UserTypes | null) => void) =>
         callback(data);
     });
 
-const checkUserExists = async (userId: string) => {
-    return get(ref(db, `users/${userId}`)).then((snapshot) =>
-        snapshot.exists(),
-    );
-};
+const checkUserExists = async (userId: string) =>
+    get(ref(db, `users/${userId}`)).then((snapshot) => snapshot.exists());
 
 const createUser = (user: UserTypes) => {
     assert(user !== null, '사용자가 없습니다.');

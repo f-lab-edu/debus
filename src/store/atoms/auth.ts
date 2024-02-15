@@ -8,10 +8,7 @@ export type UserTypes = {
     email: string | null;
 } | null;
 
-const authAtom = atom<UserTypes | null>(null);
-authAtom.onMount = (set) => {
-    const unsubscribe = onUserStateChange(set);
-    return () => unsubscribe();
-};
+export const authAtom = atom<UserTypes | null>(null);
+authAtom.onMount = (set) => onUserStateChange(set);
 
 export const useAuth = () => useAtomValue(authAtom);
