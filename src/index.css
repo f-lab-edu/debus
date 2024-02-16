@@ -9,6 +9,7 @@
     --color-gray-900: #1d2026;
     --color-accent: #ff6636;
     --color-btn-hover: #1d202610;
+    --color-bg-side: #ffece9;
 }
 
 * {
@@ -28,6 +29,7 @@
     --color-text: white;
     --color-gray-900: white;
     --color-btn-hover: #ffffff10;
+    --color-bg-side: #191b20;
 }
 
 #app .container {
