@@ -1,4 +1,4 @@
-import { atom, useAtomValue } from 'jotai';
+import { atom } from 'jotai';
 import { onUserStateChange } from 'src/api/firebase';
 
 export type UserTypes = {
@@ -10,5 +10,3 @@ export type UserTypes = {
 
 export const authAtom = atom<UserTypes | null>(null);
 authAtom.onMount = (set) => onUserStateChange(set);
-
-export const useAuth = () => useAtomValue(authAtom);
