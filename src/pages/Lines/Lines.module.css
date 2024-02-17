@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+}
+
+.chat {
+    width: 100%;
+}
+
+.side {
+    width: 300px;
+}
