@@ -1,0 +1,21 @@
+.container {
+    width: 100%;
+    height: 120px;
+    padding: 1rem 2rem;
+}
+
+.inner-form-container {
+    height: 100%;
+    padding: 1rem 1rem 0.5rem 1rem;
+    border: 1px solid var(--color-bg-side);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
