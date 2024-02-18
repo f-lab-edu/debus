@@ -18,14 +18,12 @@ module.exports = {
     rules: {
         'no-var': 'warn',
         'no-unused-vars': ['off'],
-        'react/jsx-filename-extension': [
-            1,
-            { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
-        ],
+        'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
         'react-hooks/exhaustive-deps': 'warn',
         '@typescript-eslint/no-unused-vars': 'warn',
         'react/react-in-jsx-scope': 'off',
         '@typescript-eslint/no-unused-vars': ['warn'],
+        'prettier/prettier': 'off',
     },
     settings: {
         react: {
