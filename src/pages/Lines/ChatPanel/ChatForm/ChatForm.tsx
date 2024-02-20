@@ -1,5 +1,5 @@
 import classnames from 'classnames/bind';
-import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
+import { ChangeEvent, FormEvent, KeyboardEvent, useCallback, useState } from 'react';
 import { BsPlusCircleFill } from 'react-icons/bs';
 import { PiPaperPlaneTiltFill } from 'react-icons/pi';
 import styles from './ChatForm.module.css';
@@ -14,6 +14,13 @@ const ChatForm = () => {
         console.log(`${content} 전송!`);
         setContent('');
         setTextareaHeight('17px');
+    };
+
+    const handleEnterSubmit = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === 'Enter' && e.shiftKey) return;
+        if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
+            handleSubmit(e as unknown as FormEvent<HTMLFormElement>);
+        }
     };
 
     const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -42,6 +49,7 @@ const ChatForm = () => {
                         rows={1}
                         value={content}
                         onChange={handleChange}
+                        onKeyDown={handleEnterSubmit}
                         placeholder="내용을 입력해주세요"
                     ></textarea>
                     <div className={cx('footer')}>
