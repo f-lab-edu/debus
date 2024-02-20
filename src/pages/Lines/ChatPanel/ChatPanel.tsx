@@ -8,7 +8,7 @@ const cx = classnames.bind(styles);
 export type Message = {
     id: string;
     content: string;
-    timeStamp: string;
+    timestamp: string;
     user: {
         id: string;
         name: string;

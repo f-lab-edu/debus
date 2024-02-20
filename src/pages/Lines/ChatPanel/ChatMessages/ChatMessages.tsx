@@ -1,7 +1,5 @@
 import { Message } from '@pages/Lines/ChatPanel/ChatPanel';
-import { authAtom } from '@store/atoms/tempAuth';
 import classnames from 'classnames/bind';
-import { useAtomValue } from 'jotai';
 import moment from 'moment';
 import { useMemo } from 'react';
 import styles from './ChatMessages.module.css';
@@ -11,11 +9,13 @@ type PropsType = {
     message: Message;
 };
 
-const ChatMessages = ({ message }: PropsType) => {
-    const user = useAtomValue(authAtom);
-    const isMyMessage = useMemo(() => user && user.uid === message.user.id, [user, message.user.id]);
-    const timeAgo = moment(message.timeStamp).fromNow();
+const user = {
+    uid: 'def',
+};
 
+const ChatMessages = ({ message }: PropsType) => {
+    const isMyMessage = useMemo(() => user && user.uid === message.user.id, [message.user.id]);
+    const timeAgo = moment(Number(message.timestamp)).fromNow();
     return (
         <div className={cx('container', { me: isMyMessage })}>
             <div className={cx('user-img')}></div>
