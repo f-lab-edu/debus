@@ -20,7 +20,7 @@
 #app {
     background: var(--color-bg);
     color: var(--color-text);
-    height: 100vh;
+    height: 100%;
 }
 
 #app.dark {
