@@ -8,13 +8,12 @@
 
 .chat-message-container {
     width: 100%;
-    min-height: 360px;
     overflow: auto;
     padding: 2rem 2rem;
 }
 
 @media screen and (max-height: 500px) {
     .container {
-        height: 500px;
+        height: 440px;
     }
 }
