@@ -52,8 +52,9 @@ const checkUserExists = async (userId: string) =>
 const createUser = (user: UserTypes) => {
     assert(user !== null, '사용자가 없습니다.');
     return set(ref(db, `users/${user.uid}`), {
-        name: user?.displayName,
-        email: user?.email,
-        photoURL: user?.photoURL,
+        id: user.uid,
+        name: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
     });
 };
