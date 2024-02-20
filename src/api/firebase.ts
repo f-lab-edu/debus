@@ -24,23 +24,13 @@ const db = getDatabase(app);
 const provider = new GoogleAuthProvider();
 
 export const login = () =>
-    signInWithPopup(auth, provider)
-        .then(async (res) => {
-            const user = res.user;
-            const isRegistered = await checkUserExists(user.uid);
-            if (!isRegistered)
-                createUser(user).catch((error) => {
-                    throw new Error(error);
-                });
-        })
-        .catch((error) => {
-            throw new Error(error);
-        });
-
-export const logout = () =>
-    signOut(auth).catch((error) => {
-        throw new Error(error);
+    signInWithPopup(auth, provider).then(async (res) => {
+        const user = res.user;
+        const isRegistered = await checkUserExists(user.uid);
+        if (!isRegistered) await createUser(user);
     });
+
+export const logout = () => signOut(auth);
 
 export const onUserStateChange = (callback: (user: UserTypes | null) => void) =>
     onAuthStateChanged(auth, async (user) => {
