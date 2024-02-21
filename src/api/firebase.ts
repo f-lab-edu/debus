@@ -34,16 +34,16 @@ export const logout = () => signOut(auth);
 
 export const onUserStateChange = (callback: (user: UserTypes | null) => void) =>
     onAuthStateChanged(auth, async (user) => {
-        let data = {} as UserTypes;
-        if (user) {
-            data = {
-                uid: user.uid,
-                displayName: user.displayName,
-                photoURL: user.photoURL,
-                email: user.email,
-            };
-        } else data = null;
-        callback(data);
+        callback(
+            user
+                ? {
+                      uid: user.uid,
+                      displayName: user.displayName,
+                      photoURL: user.photoURL,
+                      email: user.email,
+                  }
+                : null,
+        );
     });
 
 const checkUserExists = async (userId: string) =>
