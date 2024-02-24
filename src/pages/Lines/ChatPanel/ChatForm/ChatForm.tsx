@@ -11,17 +11,19 @@ type FormData = {
 };
 
 const ChatForm = () => {
-    const { register, handleSubmit, setFocus, reset, watch } = useForm<FormData>();
-    const [textareaHeight, setTextareaHeight] = useState('17px');
+    const { register, handleSubmit, setFocus, reset, watch, getValues } = useForm<FormData>();
+    const [textareaHeight, setTextareaHeight] = useState(17);
     const value = watch('content');
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
         const content = data.content;
-        if (content.trim() === '') {
+
+        if (!content || content.trim() === '') {
             return;
         }
+
         console.log(`${content} 전송!`);
-        setTextareaHeight('17px');
+        setTextareaHeight(17);
         reset();
     };
 
@@ -41,18 +43,15 @@ const ChatForm = () => {
             const lineHeight = 17;
             const totalTextHeight = value.split('\n').length * lineHeight;
             const newHeight = totalTextHeight < lineHeight ? textareaHeight : totalTextHeight;
-            setTextareaHeight(newHeight + 'px');
+            setTextareaHeight(newHeight);
         },
         [textareaHeight],
     );
 
     useEffect(() => {
-        if (value) resizeTextareaHeight(value);
-    }, [value, resizeTextareaHeight]);
-
-    useEffect(() => {
         setFocus('content');
-    }, [setFocus]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className={cx('container')}>
@@ -60,8 +59,10 @@ const ChatForm = () => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <textarea
                         className={cx('text-input')}
-                        style={{ height: textareaHeight }}
-                        {...register('content')}
+                        style={{ height: textareaHeight + 'px' }}
+                        {...register('content', {
+                            onChange: () => resizeTextareaHeight(getValues('content')),
+                        })}
                         rows={1}
                         onKeyDown={handleEnterSubmit}
                         placeholder="내용을 입력해주세요"
