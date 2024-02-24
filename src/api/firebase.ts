@@ -35,14 +35,12 @@ export const logout = () => signOut(auth);
 export const onUserStateChange = (callback: (user: UserTypes | null) => void) =>
     onAuthStateChanged(auth, async (user) => {
         callback(
-            user
-                ? {
-                      uid: user.uid,
-                      displayName: user.displayName,
-                      photoURL: user.photoURL,
-                      email: user.email,
-                  }
-                : null,
+            user && {
+                uid: user.uid,
+                displayName: user.displayName,
+                photoURL: user.photoURL,
+                email: user.email,
+            },
         );
     });
 
