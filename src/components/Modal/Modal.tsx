@@ -1,24 +1,17 @@
-import ConfirmModal from '@components/Modal/ModalDetailComponents/ConfirmModal';
-import CreateChatRoomModal from '@components/Modal/ModalDetailComponents/CreateChatRoomModal';
-import { useModal } from '@store/atoms/modal';
-import classnames from 'classnames/bind';
-import styles from './Modal.module.css';
-const cx = classnames.bind(styles);
+import ModalContainer from '@components/Modal/ModalContainer/ModalContainer';
+import Overlay, { OverlayPropsType } from '@components/UI/Overlay/Overlay';
 
-const modals: Record<string, JSX.Element> = {
-    confirm: <ConfirmModal />,
-    createChatRoom: <CreateChatRoomModal />,
+type PropsType = OverlayPropsType & {
+    isOpen: boolean;
 };
 
-const Modal = () => {
-    const { isOpen, modalType, closeModal } = useModal();
-
+const Modal = ({ children, isOpen, onClose }: PropsType) => {
     if (!isOpen) return;
 
     return (
-        <div className={cx('backdrop')} onClick={closeModal}>
-            {modalType && modals[modalType]}
-        </div>
+        <Overlay onClose={onClose}>
+            <ModalContainer onClose={onClose}>{children}</ModalContainer>
+        </Overlay>
     );
 };
 
