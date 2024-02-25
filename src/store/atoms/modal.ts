@@ -1,20 +1,32 @@
-import { atomWithReset } from 'jotai/utils';
+import { useAtom } from 'jotai';
+import { atomWithReset, useResetAtom } from 'jotai/utils';
 
-type ModalType = {
+type ModalState = {
     isOpen: boolean;
-    type?: string;
-    props?: ModalPropsType;
+    type?: ModalType;
 };
+type ModalType = 'confirm' | 'createChatRoom';
 
-export type ModalPropsType = {
-    text?: string;
-    handler?: () => void;
-};
-
-const initialState: ModalType = {
+const initialState: ModalState = {
     isOpen: false,
-    type: '',
-    props: {},
 };
 
 export const modalAtom = atomWithReset(initialState);
+
+export const useModal = (type?: ModalType) => {
+    const [{ isOpen, type: modalType }, setModal] = useAtom(modalAtom);
+
+    const openModal = () =>
+        setModal({
+            isOpen: true,
+            type,
+        });
+    const closeModal = useResetAtom(modalAtom);
+
+    return {
+        isOpen,
+        modalType,
+        openModal,
+        closeModal,
+    };
+};
