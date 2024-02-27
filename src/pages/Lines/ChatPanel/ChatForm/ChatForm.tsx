@@ -1,5 +1,5 @@
 import classnames from 'classnames/bind';
-import { KeyboardEventHandler, useCallback, useEffect, useState } from 'react';
+import { KeyboardEventHandler, useCallback, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { BsPlusCircleFill } from 'react-icons/bs';
 import { PiPaperPlaneTiltFill } from 'react-icons/pi';
@@ -11,7 +11,7 @@ type FormData = {
 };
 
 const ChatForm = () => {
-    const { register, handleSubmit, setFocus, reset, watch, getValues } = useForm<FormData>();
+    const { register, handleSubmit, reset, watch, getValues } = useForm<FormData>();
     const [textareaHeight, setTextareaHeight] = useState(17);
     const value = watch('content');
 
@@ -48,11 +48,6 @@ const ChatForm = () => {
         [textareaHeight],
     );
 
-    useEffect(() => {
-        setFocus('content');
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     return (
         <div className={cx('container')}>
             <div className={cx('inner-form-container')}>
@@ -66,6 +61,7 @@ const ChatForm = () => {
                         rows={1}
                         onKeyDown={handleEnterSubmit}
                         placeholder="내용을 입력해주세요"
+                        autoFocus
                     ></textarea>
                     <div className={cx('footer')}>
                         <button className={cx('file-btn')}>
