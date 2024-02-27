@@ -1,7 +1,6 @@
 import { Message } from '@pages/Lines/ChatPanel/ChatPanel';
 import classnames from 'classnames/bind';
 import moment from 'moment';
-import { useMemo } from 'react';
 import styles from './ChatMessages.module.css';
 const cx = classnames.bind(styles);
 
@@ -14,7 +13,7 @@ const user = {
 };
 
 const ChatMessages = ({ message }: PropsType) => {
-    const isMyMessage = useMemo(() => user && user.uid === message.user.id, [message.user.id]);
+    const isMyMessage = user && user.uid === message.user.id;
     const timeAgo = moment(Number(message.timestamp)).fromNow();
     return (
         <div className={cx('container', { me: isMyMessage })}>
