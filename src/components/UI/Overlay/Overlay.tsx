@@ -11,7 +11,7 @@ export type CloseModalEvent = {
 
 const Overlay = ({ onClose, children }: OverlayPropsType) => {
     return (
-        <div className={cx('container')} onClick={onClose} role="button">
+        <div className={cx('container')} onClick={onClose} onKeyDown={() => {}}>
             {children}
         </div>
     );

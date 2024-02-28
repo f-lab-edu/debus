@@ -9,7 +9,7 @@ const ModalContainer = ({ children, onClose }: OverlayPropsType) => {
         <div
             className={cx('container')}
             onClick={(e) => e.stopPropagation()}
-            role="button"
+            onKeyDown={() => {}}
         >
             <button className={cx('close')} onClick={onClose}>
                 <IoIosClose />
