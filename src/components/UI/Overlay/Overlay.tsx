@@ -1,10 +1,9 @@
 import classnames from 'classnames/bind';
+import { PropsWithChildren } from 'react';
 import styles from './Overlay.module.css';
 const cx = classnames.bind(styles);
 
-export type OverlayPropsType = CloseModalEvent & {
-    children: JSX.Element;
-};
+export type OverlayPropsType = CloseModalEvent & PropsWithChildren;
 
 export type CloseModalEvent = {
     onClose: () => void;
