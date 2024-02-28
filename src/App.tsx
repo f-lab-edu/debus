@@ -1,4 +1,5 @@
 import Header from '@components/Header/Header';
+import Modal from '@components/Modal/Modal';
 import { darkModeAtom } from '@store/atoms/theme';
 import { useAtomValue } from 'jotai';
 import { Outlet } from 'react-router-dom';
@@ -11,6 +12,7 @@ function App() {
             <div className="container">
                 <Outlet />
             </div>
+            <Modal />
         </div>
     );
 }

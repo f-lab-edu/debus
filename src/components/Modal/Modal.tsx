@@ -1,16 +1,15 @@
 import ModalContainer from '@components/Modal/ModalContainer/ModalContainer';
-import Overlay, { OverlayPropsType } from '@components/UI/Overlay/Overlay';
+import Overlay from '@components/UI/Overlay/Overlay';
+import { useModal } from '@store/atoms/modal';
 
-type PropsType = OverlayPropsType & {
-    isOpen: boolean;
-};
+const Modal = () => {
+    const { isOpen, closeModal, element } = useModal();
 
-const Modal = ({ children, isOpen, onClose }: PropsType) => {
     if (!isOpen) return;
 
     return (
-        <Overlay onClose={onClose}>
-            <ModalContainer onClose={onClose}>{children}</ModalContainer>
+        <Overlay onClose={closeModal}>
+            <ModalContainer onClose={closeModal}>{element}</ModalContainer>
         </Overlay>
     );
 };
