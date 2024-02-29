@@ -1,15 +1,24 @@
 import ModalContainer from '@components/Modal/ModalContainer/ModalContainer';
 import Overlay from '@components/UI/Overlay/Overlay';
-import { useModal } from '@store/atoms/modal';
+import { ModalState, useModal } from '@store/atoms/modal';
 
-const Modal = () => {
-    const { isOpen, closeModal, element } = useModal();
+type PropsType = {
+    modal: ModalState;
+};
 
-    if (!isOpen) return;
+export type CloseEventType = {
+    close: () => void;
+};
+
+const Modal = ({ modal }: PropsType) => {
+    const { id, element } = modal;
+    const { closeModal } = useModal();
+
+    const close = () => closeModal(id);
 
     return (
-        <Overlay onClose={closeModal}>
-            <ModalContainer onClose={closeModal}>{element}</ModalContainer>
+        <Overlay onClose={close}>
+            <ModalContainer onClose={close}>{element}</ModalContainer>
         </Overlay>
     );
 };
