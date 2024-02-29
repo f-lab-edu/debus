@@ -1,32 +1,33 @@
-import { useAtom } from 'jotai';
-import { atomWithReset } from 'jotai/utils';
+import { useSetAtom } from 'jotai';
+import { atomWithReset, useResetAtom } from 'jotai/utils';
 
 export type ModalState = {
-    isOpen: boolean;
-    element?: JSX.Element;
+    id: string;
+    element: JSX.Element;
 };
 
-const modalAtom = atomWithReset<ModalState>({ isOpen: false });
+export const modalAtom = atomWithReset<ModalState[]>([]);
 
 export const useModal = () => {
-    console.log('useModal');
-    const [{ isOpen, element }, setModal] = useAtom(modalAtom);
+    const setModals = useSetAtom(modalAtom);
 
-    const openModal = (element: JSX.Element) =>
-        setModal({
-            isOpen: true,
-            element,
-        });
+    const openModal = ({ id, element }: { id: string; element: JSX.Element }) =>
+        setModals((modals) => [
+            ...modals,
+            {
+                id,
+                element,
+            },
+        ]);
 
-    const closeModal = () =>
-        setModal({
-            isOpen: false,
-        });
+    const closeModal = (id: string) =>
+        setModals((modals) => modals.filter((modal) => modal.id !== id));
+
+    const remove = useResetAtom(modalAtom);
 
     return {
-        isOpen,
         openModal,
         closeModal,
-        element,
+        remove,
     };
 };
