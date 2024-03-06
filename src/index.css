@@ -9,6 +9,7 @@
     --color-gray-900: #1d2026;
     --color-accent: #ff6636;
     --color-btn-hover: #1d202610;
+    --color-bg-side: #ffece9;
 }
 
 * {
@@ -19,7 +20,7 @@
 #app {
     background: var(--color-bg);
     color: var(--color-text);
-    height: 100vh;
+    height: 100%;
 }
 
 #app.dark {
@@ -28,10 +29,16 @@
     --color-text: white;
     --color-gray-900: white;
     --color-btn-hover: #ffffff10;
+    --color-bg-side: #191b20;
 }
 
 #app .container {
     margin: 0 auto;
     max-width: 1060px;
     padding: 0 20px;
+}
+
+.divider {
+    border-top: 1px solid #ccc;
+    margin: 15px 0;
 }
