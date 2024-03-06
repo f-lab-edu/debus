@@ -1,25 +1,19 @@
 import ModalContainer from '@components/Modal/ModalContainer/ModalContainer';
 import Overlay from '@components/UI/Overlay/Overlay';
-import { ModalState, useModal } from '@store/atoms/modal';
+import { createPortal } from 'react-dom';
+import { useModal } from 'src/context/ModalContext';
 
 type PropsType = {
-    modal: ModalState;
-};
-
-export type CloseEventType = {
-    close: () => void;
+    modal: JSX.Element;
 };
 
 const Modal = ({ modal }: PropsType) => {
-    const { id, element } = modal;
     const { closeModal } = useModal();
-
-    const close = () => closeModal(id);
-
-    return (
-        <Overlay onClose={close}>
-            <ModalContainer onClose={close}>{element}</ModalContainer>
-        </Overlay>
+    return createPortal(
+        <Overlay onClose={closeModal}>
+            <ModalContainer onClose={closeModal}>{modal}</ModalContainer>
+        </Overlay>,
+        document.getElementById('modal-root')!,
     );
 };
 
