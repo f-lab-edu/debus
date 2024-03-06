@@ -3,13 +3,13 @@ import { PropsWithChildren } from 'react';
 import styles from './Overlay.module.css';
 const cx = classnames.bind(styles);
 
-export type OverlayPropsType = CloseModalEvent & PropsWithChildren;
+export type ModalProps = CloseModalEvent & PropsWithChildren;
 
 export type CloseModalEvent = {
     onClose: () => void;
 };
 
-const Overlay = ({ onClose, children }: OverlayPropsType) => {
+const Overlay = ({ onClose, children }: ModalProps) => {
     return (
         <div className={cx('container')} onClick={onClose} onKeyDown={() => {}}>
             {children}
