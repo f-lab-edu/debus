@@ -1,6 +1,5 @@
 import ModalContainer from '@components/Modal/ModalContainer/ModalContainer';
 import Overlay from '@components/UI/Overlay/Overlay';
-import { createPortal } from 'react-dom';
 import { useModal } from 'src/context/ModalContext';
 
 type PropsType = {
@@ -9,11 +8,10 @@ type PropsType = {
 
 const Modal = ({ modal }: PropsType) => {
     const { closeModal } = useModal();
-    return createPortal(
+    return (
         <Overlay onClose={closeModal}>
             <ModalContainer onClose={closeModal}>{modal}</ModalContainer>
-        </Overlay>,
-        document.getElementById('modal-root')!,
+        </Overlay>
     );
 };
 
