@@ -1,5 +1,5 @@
 import Home from '@pages/Home';
-import Lines from '@pages/Lines';
+import Lines from '@pages/Lines/Lines';
 import MyPage from '@pages/MyPage';
 import Operation from '@pages/Operation';
 import Stations from '@pages/Stations';
@@ -14,7 +14,7 @@ export const router = createBrowserRouter([
         children: [
             { index: true, element: <Home /> },
             {
-                path: '/stations/:status',
+                path: '/stations',
                 element: <Stations />,
             },
             {
@@ -30,11 +30,5 @@ export const router = createBrowserRouter([
     {
         path: '/my-operation',
         element: <Operation />,
-        children: [
-            {
-                path: '/my-operation/chat',
-                element: <Operation />,
-            },
-        ],
     },
 ]);
