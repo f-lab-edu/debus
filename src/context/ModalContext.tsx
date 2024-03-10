@@ -1,10 +1,16 @@
 import Modal from '@components/Modal/Modal';
 import ModalPortal from '@components/Modal/ModalPortal';
 import { PropsWithChildren, createContext, useContext, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
+export type ModalType = {
+    id: string;
+    element: JSX.Element;
+};
 
 type ModalContextValue = {
     openModal: (element: JSX.Element) => void;
-    closeModal: () => void;
+    closeModal: (id: string) => void;
     renderModal: () => JSX.Element[];
 };
 
@@ -15,26 +21,28 @@ const modalContext = createContext<ModalContextValue>({
 });
 
 export const ModalContextProvider = ({ children }: PropsWithChildren) => {
-    const [modals, setModals] = useState<JSX.Element[]>([]);
+    const [modals, setModals] = useState<ModalType[]>([]);
+    const openModal = (element: JSX.Element) => {
+        const id = uuidv4();
+        setModals((prev) => [
+            ...prev,
+            {
+                id,
+                element,
+            },
+        ]);
+    };
 
-    const openModal = (element: JSX.Element) =>
-        setModals((prev) => [...prev, element]);
-
-    const closeModal = () =>
-        setModals((prev) => prev.slice(0, prev.length - 1));
+    const closeModal = (id: string) => setModals((prev) => prev.filter((v) => v.id !== id));
 
     const renderModal = () =>
-        modals.map((modal, idx) => (
-            <ModalPortal key={idx}>
-                <Modal key={idx} modal={modal} />
+        modals.map((modal) => (
+            <ModalPortal key={modal.id}>
+                <Modal key={modal.id} modal={modal} />
             </ModalPortal>
         ));
 
-    return (
-        <modalContext.Provider value={{ openModal, closeModal, renderModal }}>
-            {children}
-        </modalContext.Provider>
-    );
+    return <modalContext.Provider value={{ openModal, closeModal, renderModal }}>{children}</modalContext.Provider>;
 };
 
 export const useModal = () => useContext(modalContext);

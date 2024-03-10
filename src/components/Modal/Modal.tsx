@@ -1,16 +1,15 @@
 import ModalContainer from '@components/Modal/ModalContainer/ModalContainer';
-import Overlay from '@components/UI/Overlay/Overlay';
-import { useModal } from 'src/context/ModalContext';
+import Overlay, { CloseEvent } from '@components/UI/Overlay/Overlay';
+import { ModalType, useModal } from 'src/context/ModalContext';
 
-type PropsType = {
-    modal: JSX.Element;
-};
+export type ModalProps = { modal: ModalType } & CloseEvent;
 
-const Modal = ({ modal }: PropsType) => {
+const Modal = ({ modal }: { modal: ModalType }) => {
     const { closeModal } = useModal();
+    const onCloseModal = () => closeModal(modal.id);
     return (
-        <Overlay onClose={closeModal}>
-            <ModalContainer onClose={closeModal}>{modal}</ModalContainer>
+        <Overlay onClose={onCloseModal}>
+            <ModalContainer onClose={onCloseModal} modal={modal} />
         </Overlay>
     );
 };
