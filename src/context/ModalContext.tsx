@@ -1,7 +1,6 @@
 import Modal from '@components/Modal/Modal';
 import ModalPortal from '@components/Modal/ModalPortal';
-import { PropsWithChildren, createContext, useContext, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { PropsWithChildren, createContext, useContext, useId, useState } from 'react';
 
 export type ModalType = {
     id: string;
@@ -23,11 +22,11 @@ const modalContext = createContext<ModalContextValue>({
 
 export const ModalContextProvider = ({ children }: PropsWithChildren) => {
     const [selectedModal, setSelectedModal] = useState<ModalType | null>(null);
+    const modalId = useId();
 
     const openModal = (element: JSX.Element, showCloseIcon: boolean = true) => {
-        const id = uuidv4();
         const modal = {
-            id,
+            id: modalId,
             element,
             showCloseIcon,
         };
