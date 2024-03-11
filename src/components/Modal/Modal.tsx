@@ -1,15 +1,25 @@
-import ModalContainer from '@components/Modal/ModalContainer/ModalContainer';
-import Overlay, { CloseEvent } from '@components/UI/Overlay/Overlay';
+import Overlay from '@components/UI/Overlay/Overlay';
+import classnames from 'classnames/bind';
+import { IoIosClose } from 'react-icons/io';
 import { ModalType, useModal } from 'src/context/ModalContext';
+import styles from './Modal.module.css';
+const cx = classnames.bind(styles);
 
-export type ModalProps = { modal: ModalType } & CloseEvent;
+export type ModalProps = { modal: ModalType };
 
-const Modal = ({ modal }: { modal: ModalType }) => {
+const Modal = ({ modal }: ModalProps) => {
     const { closeModal } = useModal();
-    const onCloseModal = () => closeModal(modal.id);
+    const { element, showCloseIcon } = modal;
     return (
-        <Overlay onClose={onCloseModal}>
-            <ModalContainer onClose={onCloseModal} modal={modal} />
+        <Overlay onClose={showCloseIcon ? closeModal : undefined}>
+            <div className={cx('container')} onClick={(e) => e.stopPropagation()} onKeyDown={() => {}}>
+                {showCloseIcon ? (
+                    <button className={cx('close')} onClick={closeModal}>
+                        <IoIosClose />
+                    </button>
+                ) : null}
+                {element}
+            </div>
         </Overlay>
     );
 };
