@@ -1,6 +1,4 @@
-import Modal from '@components/Modal/Modal';
-import ModalPortal from '@components/Modal/ModalPortal';
-import { PropsWithChildren, createContext, useContext, useId, useState } from 'react';
+import { PropsWithChildren, createContext, useCallback, useState } from 'react';
 
 export type ModalType = {
     id: string;
@@ -8,41 +6,29 @@ export type ModalType = {
     showCloseIcon: boolean;
 };
 
+type ModalOpenHandler = (element: JSX.Element, id: string, showCloseIcon?: boolean) => void;
+
 type ModalContextValue = {
-    openModal: (element: JSX.Element, showCloseIcon?: boolean) => void;
-    closeModal: () => void;
-    renderModal: () => JSX.Element | null;
+    open: (element: JSX.Element, id: string, showCloseIcon?: boolean) => void;
+    close: (id: string) => void;
+    modals: ModalType[];
 };
 
-const modalContext = createContext<ModalContextValue>({
-    openModal: () => {},
-    closeModal: () => {},
-    renderModal: () => null,
-});
+export const modalContext = createContext<ModalContextValue | null>(null);
 
-export const ModalContextProvider = ({ children }: PropsWithChildren) => {
-    const [selectedModal, setSelectedModal] = useState<ModalType | null>(null);
-    const modalId = useId();
+export const ModalProvider = ({ children }: PropsWithChildren) => {
+    const [modals, setModals] = useState<ModalType[]>([]);
 
-    const openModal = (element: JSX.Element, showCloseIcon: boolean = true) => {
+    const open: ModalOpenHandler = useCallback((element, id, showCloseIcon = true) => {
         const modal = {
-            id: modalId,
+            id,
             element,
             showCloseIcon,
         };
-        setSelectedModal(modal);
-    };
+        setModals((prev) => [...prev, modal]);
+    }, []);
 
-    const closeModal = () => setSelectedModal(null);
+    const close = useCallback((id: string) => setModals((prev) => prev.filter((v) => v.id !== id)), []);
 
-    const renderModal = () =>
-        selectedModal ? (
-            <ModalPortal key={selectedModal.id}>
-                <Modal key={selectedModal.id} modal={selectedModal} />
-            </ModalPortal>
-        ) : null;
-
-    return <modalContext.Provider value={{ openModal, closeModal, renderModal }}>{children}</modalContext.Provider>;
+    return <modalContext.Provider value={{ modals, open, close }}>{children}</modalContext.Provider>;
 };
-
-export const useModal = () => useContext(modalContext);
