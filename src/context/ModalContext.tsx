@@ -3,10 +3,7 @@ import { PropsWithChildren, createContext, useCallback, useState } from 'react';
 export type ModalType = {
     id: string;
     element: JSX.Element;
-    showCloseIcon: boolean;
 };
-
-type ModalOpenHandler = (element: JSX.Element, id: string, showCloseIcon?: boolean) => void;
 
 type ModalContextValue = {
     open: (element: JSX.Element, id: string, showCloseIcon?: boolean) => void;
@@ -19,11 +16,10 @@ export const modalContext = createContext<ModalContextValue | null>(null);
 export const ModalProvider = ({ children }: PropsWithChildren) => {
     const [modals, setModals] = useState<ModalType[]>([]);
 
-    const open: ModalOpenHandler = useCallback((element, id, showCloseIcon = true) => {
+    const open = useCallback((element: JSX.Element, id: string) => {
         const modal = {
             id,
             element,
-            showCloseIcon,
         };
         setModals((prev) => [...prev, modal]);
     }, []);
