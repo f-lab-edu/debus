@@ -11,15 +11,12 @@ export const useModal = () => {
     const { modals, open, close } = context;
     const modalId = useId();
 
-    const openModal = useCallback(
-        (element: JSX.Element, showCloseIcon: boolean = true) => open(element, modalId, showCloseIcon),
-        [modalId, open],
-    );
+    const openModal = useCallback((element: JSX.Element) => open(element, modalId), [modalId, open]);
 
     const closeModal = useCallback(() => close(modalId), [modalId, close]);
 
     const renderModal = useCallback(() => {
-        const [modal] = modals.filter((modal) => modal.id === modalId);
+        const modal = modals.find((modal) => modal.id === modalId);
         return (
             modal && (
                 <ModalPortal>
