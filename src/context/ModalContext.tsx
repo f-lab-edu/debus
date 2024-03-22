@@ -3,6 +3,7 @@ import { PropsWithChildren, createContext, useCallback, useState } from 'react';
 export type ModalType = {
     id: string;
     element: JSX.Element;
+    isLocal?: boolean;
 };
 
 type ModalContextValue = {
@@ -16,10 +17,11 @@ export const modalContext = createContext<ModalContextValue | null>(null);
 export const ModalProvider = ({ children }: PropsWithChildren) => {
     const [modals, setModals] = useState<ModalType[]>([]);
 
-    const open = useCallback((element: JSX.Element, id: string) => {
+    const open = useCallback((element: JSX.Element, id: string, isLocal?: boolean) => {
         const modal = {
             id,
             element,
+            isLocal,
         };
         setModals((prev) => [...prev, modal]);
     }, []);
