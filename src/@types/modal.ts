@@ -1,3 +1,4 @@
 export type ModalProps = {
-    onClose: () => void;
+    onClose?: () => void;
+    onSubmit?: () => Promise<void> | void;
 };

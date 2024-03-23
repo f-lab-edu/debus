@@ -24,15 +24,20 @@ export const useModal = () => {
     const renderModal = useCallback(
         (portalContainer?: MutableRefObject<HTMLDivElement | null>) => {
             const modal = modals.find((modal) => modal.id === modalId);
+            const handleSubmit = async () => {
+                const onSubmit = modal && modal.element.props?.onSubmit;
+                if (onSubmit) await onSubmit();
+                closeModal();
+            };
             return (
                 modal &&
                 (modal.isLocal && portalContainer ? (
                     <ModalPortal portalContainer={portalContainer.current}>
-                        <LocalModal modal={modal} onClose={closeModal} />
+                        <LocalModal modal={modal} onClose={closeModal} onSubmit={handleSubmit} />
                     </ModalPortal>
                 ) : (
                     <ModalPortal>
-                        <Modal modal={modal} onClose={closeModal} />
+                        <Modal modal={modal} onClose={closeModal} onSubmit={handleSubmit} />
                     </ModalPortal>
                 ))
             );
