@@ -24,6 +24,15 @@ module.exports = {
         'react/react-in-jsx-scope': 'off',
         '@typescript-eslint/no-unused-vars': ['warn'],
         'prettier/prettier': 'off',
+        '@typescript-eslint/ban-types': [
+            'error',
+            {
+                extendDefaults: true,
+                types: {
+                    '{}': false,
+                },
+            },
+        ],
     },
     settings: {
         react: {
