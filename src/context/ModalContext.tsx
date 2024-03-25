@@ -1,13 +1,8 @@
-import { MutableRefObject, PropsWithChildren, createContext, useCallback, useRef, useState } from 'react';
-
-export type ModalType = {
-    id: string;
-    element: JSX.Element;
-    isLocal?: boolean;
-};
+import { ModalType } from '@hooks/useModal';
+import { MutableRefObject, PropsWithChildren, createContext, useCallback, useMemo, useRef, useState } from 'react';
 
 type ModalContextValue = {
-    open: (element: JSX.Element, id: string, showCloseIcon?: boolean) => void;
+    open: (modal: ModalType) => void;
     close: (id: string) => void;
     modals: ModalType[];
     portalRef: MutableRefObject<HTMLDivElement | null>;
@@ -19,19 +14,23 @@ export const ModalProvider = ({ children }: PropsWithChildren) => {
     const [modals, setModals] = useState<ModalType[]>([]);
     const portalRef = useRef<HTMLDivElement | null>(null);
 
-    const open = useCallback((element: JSX.Element, id: string, isLocal?: boolean) => {
-        const modal = {
-            id,
-            element,
-            isLocal,
-        };
+    const open = useCallback((modal: ModalType) => {
         setModals((prev) => [...prev, modal]);
     }, []);
 
-    const close = useCallback((id: string) => setModals((prev) => prev.filter((v) => v.id !== id)), []);
+    const close = useCallback((id: string) => setModals((prev) => prev.filter((v) => v.modalId !== id)), []);
+
+    const value = useMemo(() => {
+        return {
+            modals,
+            open,
+            close,
+            portalRef,
+        };
+    }, [modals, open, close]);
 
     return (
-        <modalContext.Provider value={{ modals, open, close, portalRef }}>
+        <modalContext.Provider value={value}>
             <div style={{ position: 'relative' }} ref={portalRef}>
                 {children}
             </div>
