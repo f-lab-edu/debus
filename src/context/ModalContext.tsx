@@ -1,5 +1,5 @@
-import { ModalType } from '@hooks/useModal';
 import { MutableRefObject, PropsWithChildren, createContext, useCallback, useMemo, useRef, useState } from 'react';
+import { ModalType } from 'src/@types/modal';
 
 type ModalContextValue = {
     open: (modal: ModalType) => void;
@@ -14,20 +14,18 @@ export const ModalProvider = ({ children }: PropsWithChildren) => {
     const [modals, setModals] = useState<ModalType[]>([]);
     const portalRef = useRef<HTMLDivElement | null>(null);
 
-    const open = useCallback((modal: ModalType) => {
-        setModals((prev) => [...prev, modal]);
-    }, []);
-
+    const open = useCallback((modal: ModalType) => setModals((prev) => [...prev, modal]), []);
     const close = useCallback((id: string) => setModals((prev) => prev.filter((v) => v.modalId !== id)), []);
 
-    const value = useMemo(() => {
-        return {
+    const value = useMemo(
+        () => ({
             modals,
             open,
             close,
             portalRef,
-        };
-    }, [modals, open, close]);
+        }),
+        [modals, open, close],
+    );
 
     return (
         <modalContext.Provider value={value}>
