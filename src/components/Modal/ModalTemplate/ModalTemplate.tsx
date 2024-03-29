@@ -1,19 +1,17 @@
-import ModalBody from '@components/Modal/ModalTemplate/ModalBody';
-import ModalHeader from '@components/Modal/ModalTemplate/ModalHeader';
 import Overlay, { OverlayProps } from '@components/UI/Overlay/Overlay';
 import classnames from 'classnames/bind';
 import { PropsWithChildren, memo } from 'react';
+import { ModalStyle } from 'src/@types/modal';
 import styles from './ModalTemplate.module.css';
 const cx = classnames.bind(styles);
 
 type ModalTemplate = PropsWithChildren &
     OverlayProps & {
         isOverlay: boolean;
+        styleType?: ModalStyle;
     };
 
-export type ModalStyle = 'default' | 'local';
-
-const Container = memo(({ children, ...rest }: ModalTemplate) => {
+const Container = memo(({ children, ...rest }: Omit<ModalTemplate, 'styleType' | 'title'>) => {
     return rest.isOverlay ? (
         <Overlay onClose={rest.onClose} preventClick={rest.preventClick} transparent={rest.transparent}>
             {children}
@@ -23,13 +21,7 @@ const Container = memo(({ children, ...rest }: ModalTemplate) => {
     );
 });
 
-const ModalTemplate = ({
-    children,
-    styleType,
-    title,
-    onClose,
-    ...rest
-}: ModalTemplate & { styleType: ModalStyle; title: string }) => {
+const ModalTemplate = ({ children, onClose, styleType = 'global', ...rest }: ModalTemplate) => {
     return (
         <Container
             onClose={onClose}
@@ -42,8 +34,7 @@ const ModalTemplate = ({
                 onClick={(e) => e.stopPropagation()}
                 onKeyDown={() => {}}
             >
-                <ModalHeader title={title} onClose={onClose} />
-                <ModalBody styleType={styleType}>{children}</ModalBody>
+                {children}
             </div>
         </Container>
     );
@@ -51,4 +42,4 @@ const ModalTemplate = ({
 
 Container.displayName = 'Container';
 
-export default ModalTemplate;
+export default memo(ModalTemplate);
