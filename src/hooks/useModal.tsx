@@ -1,18 +1,8 @@
 import Modal from '@components/Modal/Modal';
 import ModalPortal from '@components/Modal/ModalPortal';
-import { useCallback, useContext, useEffect, useId } from 'react';
+import { ComponentType, createElement, useCallback, useContext, useEffect, useId } from 'react';
 import { modalContext } from 'src/context/ModalContext';
 import { assert } from 'src/utils/assert';
-
-type PromiseResolve = <T>(value: T | PromiseLike<T>) => void;
-type PromiseReject = (value?: Error) => void;
-
-export type ModalType = {
-    element: JSX.Element;
-    modalId: string;
-    resolve: PromiseResolve;
-    reject: PromiseReject;
-};
 
 export const useModal = () => {
     const context = useContext(modalContext);
@@ -20,30 +10,25 @@ export const useModal = () => {
 
     const { modals, open, close, portalRef } = context;
     const modalId = useId();
-
+    const closeModal = useCallback(() => close(modalId), [modalId, close]);
     const openModal = useCallback(
-        (element: JSX.Element): Promise<unknown> => {
-            return new Promise((resolve: PromiseResolve, reject: PromiseReject) => {
+        <P extends { onSubmit(value: unknown): unknown }>(component: ComponentType<P>) =>
+            new Promise<Parameters<P['onSubmit']>[0]>((resolve, reject) => {
                 const modal = {
-                    element,
+                    element: createElement(component),
                     modalId,
-                    resolve,
-                    reject,
+                    resolve: <T extends {}>(value?: T) => {
+                        resolve(value);
+                        closeModal();
+                    },
+                    reject: (reason?: Error) => {
+                        reject(reason);
+                        closeModal();
+                    },
                 };
                 open(modal);
-            });
-        },
-        [modalId, open],
-    );
-
-    const closeModal = useCallback(() => close(modalId), [modalId, close]);
-
-    const handleResolve = useCallback(
-        <T extends {}>(modal: ModalType, value?: T) => {
-            modal.resolve(value);
-            closeModal();
-        },
-        [closeModal],
+            }),
+        [modalId, open, closeModal],
     );
 
     const renderModal = useCallback(() => {
@@ -51,13 +36,13 @@ export const useModal = () => {
         return (
             modal && (
                 <ModalPortal portalContainer={portalRef.current}>
-                    <Modal modal={modal} onClose={closeModal} onSubmit={handleResolve} />
+                    <Modal modal={modal} />
                 </ModalPortal>
             )
         );
-    }, [modals, modalId, closeModal, portalRef, handleResolve]);
+    }, [modals, modalId, portalRef]);
 
-    useEffect(() => closeModal(), [closeModal]);
+    useEffect(() => closeModal, [closeModal]);
 
     return { openModal, closeModal, renderModal };
 };

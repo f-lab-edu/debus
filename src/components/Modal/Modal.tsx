@@ -1,12 +1,10 @@
-import { ModalType } from '@hooks/useModal';
-import { cloneElement } from 'react';
-import { ModalProps } from 'src/@types/modal';
+import { cloneElement, memo } from 'react';
+import { ModalType } from 'src/@types/modal';
 
-const Modal = ({ modal, onClose, onSubmit }: { modal: ModalType } & ModalProps) => {
-    const { element } = modal;
-    const handleResolve = <T extends {}>(value?: T) => onSubmit?.(modal, value);
+const Modal = ({ modal }: { modal: ModalType }) => {
+    const { element, resolve, reject } = modal;
 
-    return <>{cloneElement(element, { onClose, handleResolve })}</>;
+    return <>{cloneElement(element, { onSubmit: resolve, onAbort: reject })}</>;
 };
 
-export default Modal;
+export default memo(Modal);
