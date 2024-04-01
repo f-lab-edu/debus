@@ -1,8 +1,8 @@
-import Home from '@pages/HomePage/Home';
-import Line from '@pages/LinePage/Line';
+import HomePage from '@pages/HomePage/HomePage';
+import LinePage from '@pages/LinePage/LinePage';
 import MyPage from '@pages/MyPage/MyPage';
-import Operation from '@pages/OperationPage/Operation';
-import Station from '@pages/StationPage/Station';
+import OperationPage from '@pages/OperationPage/OperationPage';
+import StationPage from '@pages/StationPage/StationPage';
 import { createBrowserRouter } from 'react-router-dom';
 import App from 'src/App';
 
@@ -11,14 +11,14 @@ export const router = createBrowserRouter([
         path: '/',
         element: <App />,
         children: [
-            { index: true, element: <Home /> },
+            { index: true, element: <HomePage /> },
             {
                 path: '/stations',
-                element: <Station />,
+                element: <StationPage />,
             },
             {
                 path: '/lines/:id',
-                element: <Line />,
+                element: <LinePage />,
             },
             {
                 path: '/my-page',
@@ -28,6 +28,6 @@ export const router = createBrowserRouter([
     },
     {
         path: '/my-operation',
-        element: <Operation />,
+        element: <OperationPage />,
     },
 ]);
