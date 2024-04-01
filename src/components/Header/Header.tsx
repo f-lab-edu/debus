@@ -1,5 +1,5 @@
-import Avatar from '@components/Avatar/Avatar';
-import ThemeButton from '@components/UI/ThemeButton/ThemeButton';
+import Avatar from '@components/@common/Avatar/Avatar';
+import ThemeButton from '@components/@common/ThemeButton/ThemeButton';
 import { authAtom } from '@store/atoms/auth';
 import classnames from 'classnames/bind';
 import { useAtomValue } from 'jotai';
