@@ -1,24 +1,10 @@
-import Overlay from '@components/UI/Overlay/Overlay';
-import classnames from 'classnames/bind';
-import { IoIosClose } from 'react-icons/io';
-import { ModalProps } from 'src/@types/modal';
-import { ModalType } from 'src/context/ModalContext';
-import styles from './Modal.module.css';
-const cx = classnames.bind(styles);
+import { cloneElement, memo } from 'react';
+import { ModalType } from 'src/@types/modal';
 
-const Modal = ({ modal, onClose }: { modal: ModalType } & ModalProps) => {
-    const { element } = modal;
+const Modal = ({ modal }: { modal: ModalType }) => {
+    const { element, resolve, reject } = modal;
 
-    return (
-        <Overlay onClose={onClose}>
-            <div className={cx('container')} onClick={(e) => e.stopPropagation()} onKeyDown={() => {}}>
-                <button className={cx('close')} onClick={onClose}>
-                    <IoIosClose />
-                </button>
-                {element}
-            </div>
-        </Overlay>
-    );
+    return <>{cloneElement(element, { onSubmit: resolve, onAbort: reject })}</>;
 };
 
-export default Modal;
+export default memo(Modal);

@@ -3,14 +3,24 @@ import { PropsWithChildren } from 'react';
 import styles from './Overlay.module.css';
 const cx = classnames.bind(styles);
 
-type PropsType = {
-    onClose: () => void;
+export type OverlayProps = {
+    onClose?: () => void;
     preventClick?: boolean;
+    transparent?: boolean;
 };
 
-const Overlay = ({ children, onClose, preventClick = false }: PropsWithChildren & PropsType) => {
+const Overlay = ({
+    children,
+    onClose,
+    preventClick = false,
+    transparent = false,
+}: PropsWithChildren & OverlayProps) => {
     return (
-        <div className={cx('container')} onClick={preventClick ? undefined : onClose} onKeyDown={() => {}}>
+        <div
+            className={cx('container', `${transparent && 'transparent'}`)}
+            onClick={preventClick ? undefined : onClose}
+            onKeyDown={() => {}}
+        >
             {children}
         </div>
     );

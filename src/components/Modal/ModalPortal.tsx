@@ -1,8 +1,12 @@
 import { PropsWithChildren } from 'react';
 import { createPortal } from 'react-dom';
 
-const ModalPortal = ({ children }: PropsWithChildren) => {
-    return createPortal(children, document.getElementById('modal-root')!);
+type portalContainer = {
+    portalContainer: HTMLDivElement | null;
+};
+
+const ModalPortal = ({ children, portalContainer }: PropsWithChildren & portalContainer) => {
+    return createPortal(children, portalContainer!);
 };
 
 export default ModalPortal;
