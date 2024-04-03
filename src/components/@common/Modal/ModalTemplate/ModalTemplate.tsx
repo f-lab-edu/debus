@@ -1,4 +1,4 @@
-import Overlay, { OverlayProps } from '@components/UI/Overlay/Overlay';
+import Overlay, { OverlayProps } from '@components/@common/Overlay/Overlay';
 import classnames from 'classnames/bind';
 import { PropsWithChildren, memo } from 'react';
 import { ModalStyle } from 'src/@types/modal';

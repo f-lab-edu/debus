@@ -1,5 +1,5 @@
-import Modal from '@components/Modal/Modal';
-import ModalPortal from '@components/Modal/ModalPortal';
+import Modal from '@components/@common/Modal/Modal';
+import ModalPortal from '@components/@common/Modal/ModalPortal';
 import { ComponentType, createElement, useCallback, useContext, useEffect, useId } from 'react';
 import { modalContext } from 'src/context/ModalContext';
 import { assert } from 'src/utils/assert';
