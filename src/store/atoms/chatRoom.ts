@@ -8,22 +8,14 @@ export type ChatRoomInfoType = {
     desc: string;
     options: string[];
     createAt: number;
-    members: {
-        userId: string;
-        name: string;
-        role: string;
-    }[];
+    members: Member[];
     status: ChatRoomStatus;
 };
 
-const initialState: ChatRoomInfoType = {
-    id: '',
-    title: '',
-    desc: '',
-    options: [],
-    createAt: 0,
-    members: [],
-    status: 'pending',
+export type Member = {
+    userId: string;
+    name: string;
+    role: string;
 };
 
-export const chatRoomAtom = atom(initialState);
+export const currentChatRoom = atom('');
