@@ -1,27 +1,20 @@
-import { chatRoomAtom } from '@store/atoms/chatRoom';
+import { ChatRoomInfoType } from '@store/atoms/chatRoom';
 import classnames from 'classnames/bind';
-import { useAtomValue } from 'jotai';
+import { memo } from 'react';
 import styles from './ChatRoomHeader.module.css';
 const cx = classnames.bind(styles);
 
-const ChatRoomHeader = () => {
-    const chatRoomInfo = useAtomValue(chatRoomAtom);
+const ChatRoomHeader = ({ chatRoom }: { chatRoom: ChatRoomInfoType }) => {
     return (
         <div className={cx('container')}>
-            <h1>No. {chatRoomInfo.id}</h1>
+            <h1>No. {[...chatRoom.id.slice(0, 5)]}</h1>
             <div className={cx('divider')}></div>
-            <p className={cx('title')}>
-                {chatRoomInfo.title} 제목은 길면 잘려요
-            </p>
-            <p className={cx('desc')}>{chatRoomInfo.desc}</p>
+            <p className={cx('title')}>{chatRoom.title}</p>
+            <p className={cx('desc')}>{chatRoom.desc}</p>
             <div className={cx('divider')}></div>
-            <ul>
-                {chatRoomInfo.options.map((option) => (
-                    <li key={option}>- {option}</li>
-                ))}
-            </ul>
+            <ul>{chatRoom.options && chatRoom.options.map((option) => <li key={option}>{option}</li>)}</ul>
         </div>
     );
 };
 
-export default ChatRoomHeader;
+export default memo(ChatRoomHeader);
