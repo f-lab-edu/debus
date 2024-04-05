@@ -1,4 +1,5 @@
 import { UserTypes } from '@store/atoms/auth';
+import { MutationFunction } from '@tanstack/react-query';
 import { initializeApp } from 'firebase/app';
 import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 import { DataSnapshot, get, getDatabase, ref, set } from 'firebase/database';
@@ -55,28 +56,28 @@ const createUser = (user: UserTypes) => {
 const checkChatRoomExists = async (chatRoomId: string) =>
     get(ref(db, `lines/${chatRoomId}`)).then((snapshot) => snapshot.exists());
 
-export const createChatRoom = async (user: UserTypes | null, chatRoomInfo: ChatRoomInfo) => {
+export const createChatRoom: MutationFunction<string, [UserTypes, ChatRoomInfo]> = async ([user, chatRoomInfo]) => {
     const id = nanoid();
     const isExistingChatroom = await checkChatRoomExists(id);
-    if (!isExistingChatroom) {
-        const newChatRoom: ChatRoomInfoType = {
-            ...chatRoomInfo,
-            id,
-            options: chatRoomInfo.options.split(','),
-            members: [
-                {
-                    userId: user?.uid ?? 'testUserId',
-                    name: user?.displayName ?? 'testName',
-                    role: 'owner',
-                },
-            ],
-            createAt: new Date().getTime(),
-            status: 'pending',
-        };
-        await set(ref(db, `lines/${id}`), newChatRoom);
-        return id;
+    if (isExistingChatroom) {
+        throw new Error('이미 존재하는 정류장 번호입니다.');
     }
-    throw new Error('이미 존재하는 정류장 번호입니다.');
+    const newChatRoom: ChatRoomInfoType = {
+        ...chatRoomInfo,
+        id,
+        options: chatRoomInfo.options.split(','),
+        members: [
+            {
+                userId: user?.uid ?? 'tempId',
+                name: user?.displayName ?? 'noname',
+                role: 'owner',
+            },
+        ],
+        createAt: new Date().getTime(),
+        status: 'pending',
+    };
+    await set(ref(db, `lines/${id}`), newChatRoom);
+    return id;
 };
 
 export const getChatRoom = async (id: string) => {
