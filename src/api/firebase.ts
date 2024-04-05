@@ -56,7 +56,10 @@ const createUser = (user: UserTypes) => {
 const checkChatRoomExists = async (chatRoomId: string) =>
     get(ref(db, `lines/${chatRoomId}`)).then((snapshot) => snapshot.exists());
 
-export const createChatRoom: MutationFunction<string, [UserTypes, ChatRoomInfo]> = async ([user, chatRoomInfo]) => {
+export const createChatRoom: MutationFunction<string, { user: UserTypes; chatRoomInfo: ChatRoomInfo }> = async ({
+    user,
+    chatRoomInfo,
+}) => {
     const id = nanoid();
     const isExistingChatroom = await checkChatRoomExists(id);
     if (isExistingChatroom) {

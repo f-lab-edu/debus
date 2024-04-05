@@ -19,8 +19,8 @@ const ChatRooms = () => {
 
     const handleCreate = async () => {
         try {
-            const result = await openModal(CreateChatRoomModal);
-            mutate([user, result]);
+            const chatRoomInfo = await openModal(CreateChatRoomModal);
+            mutate({ user, chatRoomInfo });
         } catch (err) {
             console.log('모달 닫습니다~!');
         }
