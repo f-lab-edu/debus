@@ -1,4 +1,8 @@
-import { atom } from 'jotai';
+export type ChatRoomInfo = {
+    title: string;
+    desc: string;
+    options: string;
+};
 
 type ChatRoomStatus = 'pending' | 'running';
 
@@ -18,4 +22,12 @@ export type Member = {
     role: string;
 };
 
-export const currentChatRoom = atom('');
+export type Message = {
+    id: string;
+    content: string;
+    timestamp: unknown;
+    user: {
+        id?: string;
+        name: string;
+    };
+};
